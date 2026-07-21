@@ -1,0 +1,33 @@
+
+services:
+  benner-rpa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      BENNER_USERNAME: ${BENNER_USERNAME}
+      BENNER_PASSWORD: ${BENNER_PASSWORD}
+      BENNER_KEY: ${BENNER_KEY}
+      BENNER_DATA: ${BENNER_DATA}
+      BENNER_INICIO: ${BENNER_INICIO}
+      BENNER_FIM: ${BENNER_FIM}
+      BENNER_OBSERVACOES: ${BENNER_OBSERVACOES}
+      BENNER_TIPO: ${BENNER_TIPO}
+    volumes:
+      - ./videos:/app/videos
+    networks:
+      - custom_network
+    command: >
+      python benner_rpa.py
+      --username "${BENNER_USERNAME}"
+      --password "${BENNER_PASSWORD}"
+      --key "${BENNER_KEY}"
+      --data "${BENNER_DATA}"
+      --inicio "${BENNER_INICIO}"
+      --fim "${BENNER_FIM}"
+      --observacoes "${BENNER_OBSERVACOES}"
+      --tipo "${BENNER_TIPO}"
+
+networks:
+  custom_network:
+    driver: bridge
